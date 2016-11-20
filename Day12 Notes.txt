@@ -1,0 +1,14 @@
+- upgrade the book variables to properties  (i.e. SimpleIntegerProperty) to make it close to being a primative
+- Do so to prepare for the TableView
+- Look at the book object example
+- pubDate = new SimpleStringProperty( d.toString()); ...
+
+
+----Ideas for the project 7
+0. Create the MVC setup - May be able to copy over Project 6 and convert.
+1. upgrade the CPU variables
+2. Use the TableView< CPU > cpuTable in the View class
+3. database -> observable list -> TableView;  when the data changes the table will automatically change as well
+4. We have an example of interfacing to the database.  
+
+http://docs.oracle.com/javafx/2/ui_controls/table-view.htm
