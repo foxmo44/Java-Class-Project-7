@@ -1,10 +1,12 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -61,7 +63,7 @@ public class CpuView
         mainStage.setTitle( "Fox CPU Viewer" );
         FlowPane root = new FlowPane( Orientation.VERTICAL, 20, 20 );
         root.setAlignment( Pos.CENTER );
-        Scene scene01 = new Scene( root, 500, 700 );
+        Scene scene01 = new Scene( root, 600, 700 );
         mainStage.setScene( scene01 );
 
         lblCpuList = new Label( "CPU Information List" );
@@ -179,15 +181,30 @@ public class CpuView
     private void SetupTableView()
     {
         tableViewCpu = new TableView<CPU>(  );
-        tableViewCpu.setPrefSize( 320, 160 );
+        tableViewCpu.setPrefSize( 520, 160 );
         tableViewCpu.setEditable( true );
 
         // Sets up a column in the table.
         // By using properties with field names that follow the convention
         // we can easily connect a field from the datatype to a column in our
         // table.
+
+        TableColumn< CPU, Integer > Identifier = new TableColumn<>( "Identifier" );
+        Identifier.setCellValueFactory( new PropertyValueFactory<>( "Identifier" ) );
+        tableViewCpu.getColumns().add( Identifier );
+
         TableColumn< CPU, String > cpuName = new TableColumn<>( "CPU Name" );
         cpuName.setCellValueFactory( new PropertyValueFactory<>( "CPUName" ) );
+        cpuName.setCellFactory( TextFieldTableCell.forTableColumn() );
+        cpuName.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<CPU, String>>(){
+                    public void handle( TableColumn.CellEditEvent<CPU, String> c ){
+                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+                        tempCpu.setCPUName(c.getNewValue());
+                        System.out.println( "CPU: " + tempCpu.getCPUName() );
+                    }
+                }
+        );
         tableViewCpu.getColumns().add( cpuName );
 
         TableColumn< CPU, Integer > Performance = new TableColumn<>( "Performance" );

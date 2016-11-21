@@ -147,10 +147,19 @@ public class CPU
 
 
     /**
-     * Getter
+     * Getter for CPU Name
      * @return the CPU Name
      */
     public String getCPUName(){return(m_strCPUName);};
+
+    /**
+     * Setter for CPU NAME
+     * @param strCPUName
+     */
+    public void setCPUName(String strCPUName)
+    {
+        m_strCPUName = strCPUName;
+    }
 
     /**
      * @return if the cpu's line was parsed with all valid values for the fields or not
