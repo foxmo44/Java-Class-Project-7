@@ -207,14 +207,14 @@ public class CpuView
         );
         tableViewCpu.getColumns().add( cpuName );
 
-        TableColumn< CPU, Integer > Performance = new TableColumn<>( "Performance" );
+        TableColumn< CPU, String > Performance = new TableColumn<>( "Performance" );
         Performance.setCellValueFactory( new PropertyValueFactory<>( "Performance" ) );
 //        Performance.setCellFactory( TextFieldTableCell.forTableColumn() );
 //        Performance.setOnEditCommit(
-//                new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>(){
-//                    public void handle( TableColumn.CellEditEvent<CPU, Integer> c ){
+//                new EventHandler<TableColumn.CellEditEvent<CPU, String>>(){
+//                    public void handle( TableColumn.CellEditEvent<CPU, String> c ){
 //                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
-//                        tempCpu.setPerformance(c.getNewValue());
+//                        tempCpu.setPerformance(Integer.parseInt(c.getNewValue()));
 //                        System.out.println( "Performance: " + tempCpu.getPerformance() );
 //                    }
 //                }
