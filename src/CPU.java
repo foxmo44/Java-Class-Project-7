@@ -1,3 +1,7 @@
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  * <h1>Advanced Java - Project 4</h1>
  * <h1>CPU Class</h1>
@@ -13,12 +17,13 @@ public class CPU
 {
     private boolean m_bValid;
     private String m_strCPULine;
-    private String m_strCPUName;
-    private int m_iPerformance;
-    private double m_dPrice;
-    private double m_dValue; //Performance / Price
     private static final double NA_VALUE = 9999.99;
-    private int m_iIdentifier = -1;
+    private double m_dValue; //Performance / Price
+
+    private SimpleStringProperty m_strCPUName;
+    private SimpleIntegerProperty m_iPerformance;
+    private SimpleDoubleProperty m_dPrice;
+    private SimpleIntegerProperty m_iIdentifier;
 
     /**
      * @param strCPULine is the CPU line from the file
@@ -38,12 +43,14 @@ public class CPU
      */
     public CPU(int iIdentifier, String strCPUName, int iPerformance, double dPrice)
     {
-        m_strCPUName = strCPUName;
-        m_iPerformance = iPerformance;
-        m_dPrice = dPrice;
-        m_dValue = m_iPerformance / m_dPrice; //Performance / Price
+        m_strCPUName = new SimpleStringProperty(strCPUName);
+        m_iPerformance = new SimpleIntegerProperty(iPerformance);
+        m_dPrice = new SimpleDoubleProperty(dPrice);
+        m_iIdentifier = new SimpleIntegerProperty(iIdentifier);
+
+        m_dValue = iPerformance / dPrice; //Performance / Price
         m_bValid = true;
-        m_iIdentifier = iIdentifier;
+
     }
 
     /**
@@ -68,18 +75,18 @@ public class CPU
             bRetValue = false;
         }
 
-        m_strCPUName = tokens[0];
+        m_strCPUName = new SimpleStringProperty(tokens[0]);
 
         //Get the performance
         try
         {
             strTemp = tokens[1];
             strNumeric = strTemp.replaceAll("[^0-9.]+", "");  //Get rid of non digit characters
-            m_iPerformance = Integer.parseInt(strNumeric);
+            m_iPerformance = new SimpleIntegerProperty(Integer.parseInt(strNumeric));
         }
         catch(NumberFormatException ex)
         {
-            m_iPerformance = (int)NA_VALUE;
+            m_iPerformance = new SimpleIntegerProperty((int)NA_VALUE);
             bRetValue = false;
         }
 
@@ -88,18 +95,18 @@ public class CPU
         {
             strTemp = tokens[2];
             strNumeric = strTemp.replaceAll("[^0-9.]+", "");   //Get rid of non digit characters
-            m_dPrice = Double.parseDouble(strNumeric);
+            m_dPrice = new SimpleDoubleProperty(Double.parseDouble(strNumeric));
         }
         catch(NumberFormatException ex)
         {
-            m_dPrice = NA_VALUE; //Bogus Value
+            m_dPrice = new SimpleDoubleProperty(NA_VALUE); //Bogus Value
             bRetValue = false;
         }
 
         //If we have valid Performance and Price values then return the calculated value otherwise set to zero
         if(bRetValue)
         {
-            m_dValue = m_iPerformance / m_dPrice;
+            m_dValue = m_iPerformance.intValue() / m_dPrice.doubleValue();
         }
         else
         {
@@ -130,14 +137,22 @@ public class CPU
      * Getter
      * @return the performance as an double
      */
-    public int getPerformance(){return(m_iPerformance);};
+    public int getPerformance(){return(m_iPerformance.get());};
 
+    /**
+     * Setter for the performance parameter
+     * @param iPerformance
+     */
+    public void setPerformance(int iPerformance)
+    {
+        m_iPerformance.set(iPerformance);
+    }
 
     /**
      * Getter
      * @return the price as a double
      */
-    public double getPrice(){return(m_dPrice);};
+    public double getPrice(){return(m_dPrice.get());};
 
     /**
      * Getter
@@ -150,7 +165,7 @@ public class CPU
      * Getter for CPU Name
      * @return the CPU Name
      */
-    public String getCPUName(){return(m_strCPUName);};
+    public String getCPUName(){return(m_strCPUName.get());};
 
     /**
      * Setter for CPU NAME
@@ -158,7 +173,7 @@ public class CPU
      */
     public void setCPUName(String strCPUName)
     {
-        m_strCPUName = strCPUName;
+        m_strCPUName.set(strCPUName);
     }
 
     /**
@@ -169,5 +184,5 @@ public class CPU
     /**
      * @return return the identifier of the CPU
      */
-    public int getIdentifier(){return(m_iIdentifier);};
+    public int getIdentifier(){return(m_iIdentifier.get());};
 }

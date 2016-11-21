@@ -209,6 +209,16 @@ public class CpuView
 
         TableColumn< CPU, Integer > Performance = new TableColumn<>( "Performance" );
         Performance.setCellValueFactory( new PropertyValueFactory<>( "Performance" ) );
+//        Performance.setCellFactory( TextFieldTableCell.forTableColumn() );
+//        Performance.setOnEditCommit(
+//                new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>(){
+//                    public void handle( TableColumn.CellEditEvent<CPU, Integer> c ){
+//                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+//                        tempCpu.setPerformance(c.getNewValue());
+//                        System.out.println( "Performance: " + tempCpu.getPerformance() );
+//                    }
+//                }
+//        );
         tableViewCpu.getColumns().add( Performance );
 
         TableColumn< CPU, Double > Price = new TableColumn<>( "Price" );
