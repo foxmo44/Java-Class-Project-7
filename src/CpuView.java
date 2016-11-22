@@ -1,3 +1,5 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -47,7 +49,7 @@ public class CpuView
 
     // The table graphic component
     TableView< CPU > tableViewCpu;
-
+    ObservableList< CPU > ObCpuList;
     /**
      * Default constructor for the Cpu View class.
      * @param c - CpuController object
@@ -170,11 +172,11 @@ public class CpuView
 
         System.out.printf("The list has %d\n", cpuList.size());
 
-        // The backing data structure for the ListView
-        ObservableList< CPU > list01 = FXCollections.observableArrayList( cpuList );
+        // The backing data structure for the Table View
+        ObCpuList = FXCollections.observableArrayList( cpuList );
 
         tableViewCpu.getItems().clear();
-        tableViewCpu.setItems(list01);
+        tableViewCpu.setItems(ObCpuList);
         tableViewCpu.refresh();
 
     }
@@ -238,6 +240,18 @@ public class CpuView
                 }
         );
         tableViewCpu.getColumns().add( Price );
+
+        // The selection model is what we need to look at to connect listeners to to be able to handle acitons.
+        TableView.TableViewSelectionModel< CPU > bookSelectionModel = tableViewCpu.getSelectionModel();
+        bookSelectionModel.selectedIndexProperty().addListener(
+                new ChangeListener< Number >(){
+                    public void changed(ObservableValue< ? extends Number > changed, Number oldValue, Number newValue){
+                        CPU tempCpu = ObCpuList.get( newValue.intValue() );
+                        System.out.println( "Updating db for row : " + newValue + ", with name: " + tempCpu.getCPUName() );
+                        //cpuController.Update(tempCpu.getIdentifier(),tempCpu.getCPUName(), tempCpu.getPerformance(), tempCpu.getPrice());
+                    }
+                }
+        );
 
     }
 
