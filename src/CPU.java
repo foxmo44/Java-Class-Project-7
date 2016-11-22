@@ -155,6 +155,12 @@ public class CPU
     public double getPrice(){return(m_dPrice.get());};
 
     /**
+     * Setter for the price of the CPU
+     * @param dPrice the price as a double
+     */
+    public void setPrice(double dPrice) {m_dPrice.set(dPrice);};
+
+    /**
      * Getter
      * @return the value as a double
      */

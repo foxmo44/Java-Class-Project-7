@@ -9,6 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
+
 import java.util.ArrayList;
 
 /**
@@ -207,22 +211,32 @@ public class CpuView
         );
         tableViewCpu.getColumns().add( cpuName );
 
-        TableColumn< CPU, String > Performance = new TableColumn<>( "Performance" );
+        TableColumn< CPU, Integer > Performance = new TableColumn<>( "Performance" );
         Performance.setCellValueFactory( new PropertyValueFactory<>( "Performance" ) );
-//        Performance.setCellFactory( TextFieldTableCell.forTableColumn() );
-//        Performance.setOnEditCommit(
-//                new EventHandler<TableColumn.CellEditEvent<CPU, String>>(){
-//                    public void handle( TableColumn.CellEditEvent<CPU, String> c ){
-//                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
-//                        tempCpu.setPerformance(Integer.parseInt(c.getNewValue()));
-//                        System.out.println( "Performance: " + tempCpu.getPerformance() );
-//                    }
-//                }
-//        );
+        Performance.setCellFactory( TextFieldTableCell.<CPU, Integer>forTableColumn(new IntegerStringConverter()) );
+        Performance.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>(){
+                    public void handle( TableColumn.CellEditEvent<CPU, Integer> c ){
+                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+                        tempCpu.setPerformance(c.getNewValue());
+                        System.out.println( "Performance: " + tempCpu.getPerformance() );
+                    }
+                }
+        );
         tableViewCpu.getColumns().add( Performance );
 
         TableColumn< CPU, Double > Price = new TableColumn<>( "Price" );
         Price.setCellValueFactory( new PropertyValueFactory<>( "Price" ) );
+        Price.setCellFactory( TextFieldTableCell.<CPU, Double>forTableColumn(new DoubleStringConverter()) );
+        Price.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<CPU, Double>>(){
+                    public void handle( TableColumn.CellEditEvent<CPU, Double> c ){
+                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+                        tempCpu.setPrice(c.getNewValue());
+                        System.out.println( "Price: " + tempCpu.getPrice() );
+                    }
+                }
+        );
         tableViewCpu.getColumns().add( Price );
 
     }
