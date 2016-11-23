@@ -74,7 +74,7 @@ public class CpuModel
                     ( o, oldValue, newValue ) ->
                     {
                         System.out.println( "Price oldv: " + oldValue + "newv: " + newValue );
-//TODO                        updatePrice( tempCPU.getIdentifier(), newValue );
+//TODO                  updatePrice( tempCPU.getIdentifier(), newValue );
                     }
                 );
 
@@ -82,7 +82,7 @@ public class CpuModel
                     ( o, oldValue, newValue ) ->
                     {
                         System.out.println( "Performance oldv: " + oldValue + "newv: " + newValue );
- //TODO                      updatePerformance( tempCPU.getIdentifier(), newValue );
+ //TODO                 updatePerformance( tempCPU.getIdentifier(), newValue );
                     }
                 );
             }
@@ -202,8 +202,31 @@ public class CpuModel
      */
     public static boolean updateCpuName(int iIdentifier, String strCpuName)
     {
-        //TODO DO THE UPDATE SQL for update CPU name
-        return(true);
+        boolean bRetValue = false;
+        String strSql;
+
+        try
+        {
+            if (bConnected == false)
+            {
+                bConnected = Connect("cpudb", "tcc2016", "tcc2016");
+            }
+
+            s = c.createStatement();
+
+            strSql = String.format("update cputable set cpuname = '" + strCpuName + "' where id = "  + iIdentifier );
+
+            System.out.printf("update with SQL [" + strSql + "]\n");
+
+            bRetValue = s.execute(strSql);
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return(bRetValue);
     }
 
     /**
@@ -214,8 +237,31 @@ public class CpuModel
      */
     public static boolean updatePerformance(int iIdentifier, int iPerformance)
     {
-        //TODO DO THE UPDATE SQL for update Performace name
-        return(true);
+        boolean bRetValue = false;
+        String strSql;
+
+        try
+        {
+            if (bConnected == false)
+            {
+                bConnected = Connect("cpudb", "tcc2016", "tcc2016");
+            }
+
+            s = c.createStatement();
+
+            strSql = String.format("update cputable set performance =" + iPerformance + " where id = "  + iIdentifier );
+
+            System.out.printf("update with SQL [" + strSql + "]\n");
+
+            bRetValue = s.execute(strSql);
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return(bRetValue);
     }
 
     /**
@@ -226,8 +272,31 @@ public class CpuModel
      */
     public static boolean updatePrice(int iIdentifier, double dPrice)
     {
-        //TODO DO THE UPDATE SQL for update Price name
-        return(true);
+        boolean bRetValue = false;
+        String strSql;
+
+        try
+        {
+            if (bConnected == false)
+            {
+                bConnected = Connect("cpudb", "tcc2016", "tcc2016");
+            }
+
+            s = c.createStatement();
+
+            strSql = String.format("update cputable set price = " + dPrice + " where id = "  + iIdentifier );
+
+            System.out.printf("update with SQL [" + strSql + "]\n");
+
+            bRetValue = s.execute(strSql);
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return(bRetValue);
     }
 
 
