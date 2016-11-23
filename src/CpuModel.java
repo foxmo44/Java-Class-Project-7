@@ -63,14 +63,30 @@ public class CpuModel
                 cpuList.add(tempCPU);
 
                 tempCPU.getCPUNameProperty().addListener(
-                        ( o, oldValue, newValue ) -> {
+                        ( o, oldValue, newValue ) ->
+                        {
                             System.out.println( "oldv: " + oldValue + "newv: " + newValue );
-
                             updateCpuName( tempCPU.getIdentifier(), newValue );
                         }
                 );
 
                 //TODO DO THE OTHER PROPERTIES
+//                tempCPU.getPriceProperty().addListener(
+//                    ( o, oldValue, newValue ) ->
+//                    {
+//                        System.out.println( "oldv: " + oldValue + "newv: " + newValue );
+//                        updatePrice( tempCPU.getIdentifier(), newValue );
+//                    }
+//                );
+//
+//
+//                tempCPU.getPerformanceProperty().addListener(
+//                    ( o, oldValue, newValue ) ->
+//                    {
+//                        System.out.println( "oldv: " + oldValue + "newv: " + newValue );
+//                        updatePerformance( tempCPU.getIdentifier(), newValue );
+//                    }
+//                );
             }
 
         } catch (Exception e)
@@ -189,6 +205,30 @@ public class CpuModel
     public static boolean updateCpuName(int iIdentifier, String strCpuName)
     {
         //TODO DO THE UPDATE SQL for update CPU name
+        return(true);
+    }
+
+    /**
+     * Update the performane for the record with the identifier
+     * @param iIdentifier
+     * @param iPerformance
+     * @return
+     */
+    public static boolean updatePerformance(int iIdentifier, int iPerformance)
+    {
+        //TODO DO THE UPDATE SQL for update Performace name
+        return(true);
+    }
+
+    /**
+     * Update the Price for the record with the identifier
+     * @param iIdentifier
+     * @param dPrice
+     * @return
+     */
+    public static boolean updatePrice(int iIdentifier, double dPrice)
+    {
+        //TODO DO THE UPDATE SQL for update Price name
         return(true);
     }
 
