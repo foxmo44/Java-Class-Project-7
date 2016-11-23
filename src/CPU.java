@@ -1,7 +1,4 @@
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 /**
  * <h1>Advanced Java - Project 4</h1>
@@ -150,6 +147,15 @@ public class CPU
     }
 
     /**
+     * Getter for the Performance Property
+     * @return the Performance Property
+     */
+    public IntegerProperty getPerformanceProperty()
+    {
+        return m_iPerformance;
+    }
+
+    /**
      * Getter
      * @return the price as a double
      */
@@ -160,6 +166,16 @@ public class CPU
      * @param dPrice the price as a double
      */
     public void setPrice(double dPrice) {m_dPrice.set(dPrice);};
+
+
+    /**
+     * Getter for the Price Property
+     * @return the price property
+     */
+    public DoubleProperty getPriceProperty()
+    {
+        return m_dPrice;
+    }
 
     /**
      * Getter
@@ -183,6 +199,10 @@ public class CPU
         m_strCPUName.set(strCPUName);
     }
 
+    /**
+     * Get the CPU Name Property
+     * @return The CPU Name Property
+     */
     public StringProperty getCPUNameProperty()
     {
         return m_strCPUName;

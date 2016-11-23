@@ -63,30 +63,28 @@ public class CpuModel
                 cpuList.add(tempCPU);
 
                 tempCPU.getCPUNameProperty().addListener(
-                        ( o, oldValue, newValue ) ->
-                        {
-                            System.out.println( "oldv: " + oldValue + "newv: " + newValue );
-                            updateCpuName( tempCPU.getIdentifier(), newValue );
-                        }
+                    ( o, oldValue, newValue ) ->
+                    {
+                        System.out.println( "CPU Name oldv: " + oldValue + "newv: " + newValue );
+                        updateCpuName( tempCPU.getIdentifier(), newValue );
+                    }
                 );
 
-                //TODO DO THE OTHER PROPERTIES
-//                tempCPU.getPriceProperty().addListener(
-//                    ( o, oldValue, newValue ) ->
-//                    {
-//                        System.out.println( "oldv: " + oldValue + "newv: " + newValue );
-//                        updatePrice( tempCPU.getIdentifier(), newValue );
-//                    }
-//                );
-//
-//
-//                tempCPU.getPerformanceProperty().addListener(
-//                    ( o, oldValue, newValue ) ->
-//                    {
-//                        System.out.println( "oldv: " + oldValue + "newv: " + newValue );
-//                        updatePerformance( tempCPU.getIdentifier(), newValue );
-//                    }
-//                );
+                tempCPU.getPriceProperty().addListener(
+                    ( o, oldValue, newValue ) ->
+                    {
+                        System.out.println( "Price oldv: " + oldValue + "newv: " + newValue );
+//TODO                        updatePrice( tempCPU.getIdentifier(), newValue );
+                    }
+                );
+
+                tempCPU.getPerformanceProperty().addListener(
+                    ( o, oldValue, newValue ) ->
+                    {
+                        System.out.println( "Performance oldv: " + oldValue + "newv: " + newValue );
+ //TODO                      updatePerformance( tempCPU.getIdentifier(), newValue );
+                    }
+                );
             }
 
         } catch (Exception e)
