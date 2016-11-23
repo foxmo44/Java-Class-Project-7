@@ -247,8 +247,7 @@ public class CpuView
                 new ChangeListener< Number >(){
                     public void changed(ObservableValue< ? extends Number > changed, Number oldValue, Number newValue){
                         CPU tempCpu = ObCpuList.get( newValue.intValue() );
-                        System.out.println( "Updating db for row : " + newValue + ", with name: " + tempCpu.getCPUName() );
-                        //cpuController.Update(tempCpu.getIdentifier(),tempCpu.getCPUName(), tempCpu.getPerformance(), tempCpu.getPrice());
+                        System.out.println( "Selected : " + newValue + ", with name: " + tempCpu.getCPUName() );
                     }
                 }
         );

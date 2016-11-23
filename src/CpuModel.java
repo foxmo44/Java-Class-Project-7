@@ -58,7 +58,19 @@ public class CpuModel
 
             while (r.next())
             {
-                cpuList.add(new CPU(r.getInt("id"), r.getString("cpuname"), r.getInt("performance"), r.getFloat("price")));
+                CPU tempCPU = new CPU(r.getInt("id"), r.getString("cpuname"), r.getInt("performance"), r.getFloat("price"));
+
+                cpuList.add(tempCPU);
+
+                tempCPU.getCPUNameProperty().addListener(
+                        ( o, oldValue, newValue ) -> {
+                            System.out.println( "oldv: " + oldValue + "newv: " + newValue );
+
+                            updateCpuName( tempCPU.getIdentifier(), newValue );
+                        }
+                );
+
+                //TODO DO THE OTHER PROPERTIES
             }
 
         } catch (Exception e)
@@ -166,6 +178,20 @@ public class CpuModel
 
         return(bRetValue);
     }
+
+
+    /**
+     * Update the CPU name for the identifier
+     * @param iIdentifier
+     * @param strCpuName
+     * @return
+     */
+    public static boolean updateCpuName(int iIdentifier, String strCpuName)
+    {
+        //TODO DO THE UPDATE SQL for update CPU name
+        return(true);
+    }
+
 
     /**
      * If the identifier exists then up date the record with the name, performance, and price

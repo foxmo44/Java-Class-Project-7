@@ -1,6 +1,7 @@
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * <h1>Advanced Java - Project 4</h1>
@@ -180,6 +181,11 @@ public class CPU
     public void setCPUName(String strCPUName)
     {
         m_strCPUName.set(strCPUName);
+    }
+
+    public StringProperty getCPUNameProperty()
+    {
+        return m_strCPUName;
     }
 
     /**
