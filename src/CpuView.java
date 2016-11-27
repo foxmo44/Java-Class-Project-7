@@ -348,11 +348,15 @@ public class CpuView
                     {
                         try
                         {
-                            CPU tempCpu = ObCpuList.get(newValue.intValue());
+                            int iIndex = newValue.intValue();
 
-                            String strStatus;
-                            strStatus = String.format("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
-                            lblStatus.setText(strStatus);
+                            if(iIndex >= 0)
+                            {
+                                CPU tempCpu = ObCpuList.get(iIndex);
+                                String strStatus;
+                                strStatus = String.format("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
+                                lblStatus.setText(strStatus);
+                            }
 
                         }
                         catch (Exception e)
