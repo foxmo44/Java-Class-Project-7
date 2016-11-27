@@ -15,6 +15,7 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
+import javax.security.auth.Refreshable;
 import java.util.ArrayList;
 
 /**
@@ -260,7 +261,9 @@ public class CpuView
                         System.out.println("Invalid entry so kept performance at : " + tempCpu.getPerformance() + " for " + iRow);
 
                         //Set back to the previous value
-                        c.getTableView().getItems().set(iRow, tempCpu);
+                        c.getRowValue().setPerformance(c.getOldValue());
+
+                        tableViewCpu.refresh();
                     }
 
                 }
@@ -314,7 +317,10 @@ public class CpuView
                         System.out.println("Invalid entry so kept price at : " + tempCpu.getPrice() + " for " + iRow);
 
                         //Set back to the previous value
-                        c.getTableView().getItems().set(iRow, tempCpu);
+                        c.getRowValue().setPrice(c.getOldValue());
+
+                        tableViewCpu.refresh();
+
                     }
                 }
             }
