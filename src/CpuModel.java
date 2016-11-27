@@ -207,9 +207,9 @@ public class CpuModel
 
     /**
      * Update the CPU name for the identifier
-     * @param iIdentifier
-     * @param strCpuName
-     * @return
+     * @param iIdentifier - identifier in the database for the CPU
+     * @param strCpuName - name of the CPU
+     * @return true if the database was updated
      */
     public static boolean updateCpuName(int iIdentifier, String strCpuName)
     {
@@ -242,9 +242,9 @@ public class CpuModel
 
     /**
      * Update the performane for the record with the identifier
-     * @param iIdentifier
-     * @param iPerformance
-     * @return
+     * @param iIdentifier - identifier of the record we would like to update
+     * @param iPerformance - New performance value
+     * @return true if the update worked
      */
     public static boolean updatePerformance(int iIdentifier, int iPerformance)
     {
@@ -277,9 +277,9 @@ public class CpuModel
 
     /**
      * Update the Price for the record with the identifier
-     * @param iIdentifier
-     * @param dPrice
-     * @return
+     * @param iIdentifier - identifier for the record that we would like to update
+     * @param dPrice - new price
+     * @return true if the update worked
      */
     public static boolean updatePrice(int iIdentifier, double dPrice)
     {

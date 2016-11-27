@@ -139,7 +139,7 @@ public class CPU
 
     /**
      * Setter for the performance parameter
-     * @param iPerformance
+     * @param iPerformance - The new performance value
      */
     public void setPerformance(int iPerformance)
     {
@@ -192,7 +192,7 @@ public class CPU
 
     /**
      * Setter for CPU NAME
-     * @param strCPUName
+     * @param strCPUName - The new CPU name
      */
     public void setCPUName(String strCPUName)
     {
