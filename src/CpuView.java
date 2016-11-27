@@ -45,7 +45,6 @@ public class CpuView
     private Button      btnClear;
     private Label       lblStatus;
 
-    final int INVALID_PERFORMANCE = -9999;
 
 //    private ListView< CPU > listViewCpu;
 
@@ -201,6 +200,8 @@ public class CpuView
         Identifier.setCellValueFactory( new PropertyValueFactory<>( "Identifier" ) );
         tableViewCpu.getColumns().add( Identifier );
 
+        ///////////////////
+
         TableColumn< CPU, String > cpuName = new TableColumn<>( "CPU Name" );
         cpuName.setCellValueFactory( new PropertyValueFactory<>( "CPUName" ) );
         cpuName.setCellFactory( TextFieldTableCell.forTableColumn() );
@@ -214,6 +215,8 @@ public class CpuView
                 }
         );
         tableViewCpu.getColumns().add( cpuName );
+
+        ///////////////////
 
         TableColumn< CPU, Integer > Performance = new TableColumn<>( "Performance" );
         Performance.setCellValueFactory( new PropertyValueFactory<>( "Performance" ) );
@@ -230,72 +233,115 @@ public class CpuView
                 }
                 catch(NumberFormatException e)
                 {
-                    return INVALID_PERFORMANCE; // An abnormal value
+                    return Integer.MAX_VALUE; // An abnormal value
                 }
             }
         }));
 
         Performance.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>()
+            new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>()
+            {
+                public void handle( TableColumn.CellEditEvent<CPU, Integer> c )
                 {
-                    public void handle( TableColumn.CellEditEvent<CPU, Integer> c )
+
+                    CPU tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+
+                    if(c.getNewValue() != Integer.MAX_VALUE)
                     {
-
-                        CPU tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
-
-                        if(c.getNewValue() != INVALID_PERFORMANCE)
-                        {
-                            tempCpu.setPerformance(c.getNewValue());
-                            System.out.println("New Performance: " + tempCpu.getPerformance());
-                        }
-                        else
-                        {
-                            tempCpu.setPerformance(c.getOldValue());
-                            System.out.println("Invalid entry so kept performance at : " + tempCpu.getPerformance());
-                        }
-
+                        tempCpu.setPerformance(c.getNewValue());
+                        System.out.println("New Performance: " + tempCpu.getPerformance());
                     }
+                    else
+                    {
+                        int iRow = c.getTablePosition().getRow();
+
+                        tempCpu.setPerformance(c.getOldValue());
+
+                        System.out.println("Invalid entry so kept performance at : " + tempCpu.getPerformance() + " for " + iRow);
+
+                        //Set back to the previous value
+                        c.getTableView().getItems().set(iRow, tempCpu);
+                    }
+
                 }
+            }
         );
         tableViewCpu.getColumns().add( Performance );
 
+        ///////////////////
+
         TableColumn< CPU, Double > Price = new TableColumn<>( "Price" );
         Price.setCellValueFactory( new PropertyValueFactory<>( "Price" ) );
-        Price.setCellFactory( TextFieldTableCell.<CPU, Double>forTableColumn(new DoubleStringConverter()) );
+        //Price.setCellFactory( TextFieldTableCell.<CPU, Double>forTableColumn(new DoubleStringConverter()) );
+
+        //Try to catch the invalid value entry by overriding the integer String Converter "fromString"
+        Price.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()
+        {
+            @Override
+            public Double fromString(String value)
+            {
+                try
+                {
+                    return super.fromString(value);
+                }
+                catch(NumberFormatException e)
+                {
+                    return Double.MAX_VALUE; // An abnormal value
+                }
+            }
+        }));
+
+
         Price.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<CPU, Double>>(){
-                    public void handle( TableColumn.CellEditEvent<CPU, Double> c ){
-                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+            new EventHandler<TableColumn.CellEditEvent<CPU, Double>>()
+            {
+                public void handle( TableColumn.CellEditEvent<CPU, Double> c )
+                {
+
+                    CPU tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+
+                    if(c.getNewValue() != Double.MAX_VALUE)
+                    {
                         tempCpu.setPrice(c.getNewValue());
-                        System.out.println( "Price: " + tempCpu.getPrice() );
+                        System.out.println("New Performance: " + tempCpu.getPrice());
+                    }
+                    else
+                    {
+                        int iRow = c.getTablePosition().getRow();
+
+                        tempCpu.setPrice(c.getOldValue());
+
+                        System.out.println("Invalid entry so kept price at : " + tempCpu.getPrice() + " for " + iRow);
+
+                        //Set back to the previous value
+                        c.getTableView().getItems().set(iRow, tempCpu);
                     }
                 }
+            }
         );
         tableViewCpu.getColumns().add( Price );
 
         // The selection model is what we need to look at to connect listeners to to be able to handle acitons.
         TableView.TableViewSelectionModel< CPU > bookSelectionModel = tableViewCpu.getSelectionModel();
         bookSelectionModel.selectedIndexProperty().addListener(
-                new ChangeListener< Number >(){
-                    public void changed(ObservableValue< ? extends Number > changed, Number oldValue, Number newValue)
+            new ChangeListener< Number >(){
+                public void changed(ObservableValue< ? extends Number > changed, Number oldValue, Number newValue)
+                {
+                    if(newValue != null)
                     {
-                        if(newValue != null)
+                        try
                         {
-                            try
-                            {
-                                CPU tempCpu = ObCpuList.get(newValue.intValue());
-                                System.out.println("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
-
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
+                            CPU tempCpu = ObCpuList.get(newValue.intValue());
+                            System.out.println("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
                         }
                     }
                 }
+            }
         );
-
     }
 
 
