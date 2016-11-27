@@ -176,7 +176,6 @@ public class CpuView
         strStatus = String.format("The list has %d\n", cpuList.size());
         lblStatus.setText(strStatus);
 
-
         // The backing data structure for the Table View
         ObCpuList = FXCollections.observableArrayList( cpuList );
 
