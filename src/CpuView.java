@@ -172,7 +172,10 @@ public class CpuView
 
         cpuList = cpuController.getCpuList();
 
-        System.out.printf("The list has %d\n", cpuList.size());
+        String strStatus;
+        strStatus = String.format("The list has %d\n", cpuList.size());
+        lblStatus.setText(strStatus);
+
 
         // The backing data structure for the Table View
         ObCpuList = FXCollections.observableArrayList( cpuList );
@@ -250,7 +253,11 @@ public class CpuView
                     if(c.getNewValue() != Integer.MAX_VALUE)
                     {
                         tempCpu.setPerformance(c.getNewValue());
-                        System.out.println("New Performance: " + tempCpu.getPerformance());
+
+                        String strStatus;
+                        strStatus = String.format("New Performance: " + tempCpu.getPerformance());
+                        lblStatus.setText(strStatus);
+
                     }
                     else
                     {
@@ -258,7 +265,9 @@ public class CpuView
 
                         tempCpu.setPerformance(c.getOldValue());
 
-                        System.out.println("Invalid entry so kept performance at : " + tempCpu.getPerformance() + " for " + iRow);
+                        String strStatus;
+                        strStatus = String.format("Invalid entry so kept performance at : " + tempCpu.getPerformance() + " for " + iRow);
+                        lblStatus.setText(strStatus);
 
                         //Set back to the previous value
                         c.getRowValue().setPerformance(c.getOldValue());
@@ -305,8 +314,9 @@ public class CpuView
 
                     if(c.getNewValue() != Double.MAX_VALUE)
                     {
-                        tempCpu.setPrice(c.getNewValue());
-                        System.out.println("New Performance: " + tempCpu.getPrice());
+                        String strStatus;
+                        strStatus = String.format("New Performance: " + tempCpu.getPrice());
+                        lblStatus.setText(strStatus);
                     }
                     else
                     {
@@ -314,7 +324,9 @@ public class CpuView
 
                         tempCpu.setPrice(c.getOldValue());
 
-                        System.out.println("Invalid entry so kept price at : " + tempCpu.getPrice() + " for " + iRow);
+                        String strStatus;
+                        strStatus = String.format("Invalid entry so kept price at : " + tempCpu.getPrice() + " for " + iRow);
+                        lblStatus.setText(strStatus);
 
                         //Set back to the previous value
                         c.getRowValue().setPrice(c.getOldValue());
@@ -338,7 +350,11 @@ public class CpuView
                         try
                         {
                             CPU tempCpu = ObCpuList.get(newValue.intValue());
-                            System.out.println("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
+
+                            String strStatus;
+                            strStatus = String.format("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
+                            lblStatus.setText(strStatus);
+
                         }
                         catch (Exception e)
                         {
