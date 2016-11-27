@@ -45,6 +45,8 @@ public class CpuView
     private Button      btnClear;
     private Label       lblStatus;
 
+    final int INVALID_PERFORMANCE = -9999;
+
 //    private ListView< CPU > listViewCpu;
 
     // The table graphic component
@@ -215,13 +217,43 @@ public class CpuView
 
         TableColumn< CPU, Integer > Performance = new TableColumn<>( "Performance" );
         Performance.setCellValueFactory( new PropertyValueFactory<>( "Performance" ) );
-        Performance.setCellFactory( TextFieldTableCell.<CPU, Integer>forTableColumn(new IntegerStringConverter()) );
+
+        //Try to catch the invalid value entry by overriding the integer String Converter "fromString"
+        Performance.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()
+        {
+            @Override
+            public Integer fromString(String value)
+            {
+                try
+                {
+                    return super.fromString(value);
+                }
+                catch(NumberFormatException e)
+                {
+                    return INVALID_PERFORMANCE; // An abnormal value
+                }
+            }
+        }));
+
         Performance.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>(){
-                    public void handle( TableColumn.CellEditEvent<CPU, Integer> c ){
-                        CPU  tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
-                        tempCpu.setPerformance(c.getNewValue());
-                        System.out.println( "Performance: " + tempCpu.getPerformance() );
+                new EventHandler<TableColumn.CellEditEvent<CPU, Integer>>()
+                {
+                    public void handle( TableColumn.CellEditEvent<CPU, Integer> c )
+                    {
+
+                        CPU tempCpu = (CPU) c.getTableView().getItems().get(c.getTablePosition().getRow());
+
+                        if(c.getNewValue() != INVALID_PERFORMANCE)
+                        {
+                            tempCpu.setPerformance(c.getNewValue());
+                            System.out.println("New Performance: " + tempCpu.getPerformance());
+                        }
+                        else
+                        {
+                            tempCpu.setPerformance(c.getOldValue());
+                            System.out.println("Invalid entry so kept performance at : " + tempCpu.getPerformance());
+                        }
+
                     }
                 }
         );
@@ -245,9 +277,21 @@ public class CpuView
         TableView.TableViewSelectionModel< CPU > bookSelectionModel = tableViewCpu.getSelectionModel();
         bookSelectionModel.selectedIndexProperty().addListener(
                 new ChangeListener< Number >(){
-                    public void changed(ObservableValue< ? extends Number > changed, Number oldValue, Number newValue){
-                        CPU tempCpu = ObCpuList.get( newValue.intValue() );
-                        System.out.println( "Selected : " + newValue + ", with name: " + tempCpu.getCPUName() );
+                    public void changed(ObservableValue< ? extends Number > changed, Number oldValue, Number newValue)
+                    {
+                        if(newValue != null)
+                        {
+                            try
+                            {
+                                CPU tempCpu = ObCpuList.get(newValue.intValue());
+                                System.out.println("Selected : " + newValue + ", with name: " + tempCpu.getCPUName());
+
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
         );

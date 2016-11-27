@@ -74,15 +74,26 @@ public class CpuModel
                     ( o, oldValue, newValue ) ->
                     {
                         System.out.println( "Price oldv: " + oldValue + "newv: " + newValue );
-//TODO                  updatePrice( tempCPU.getIdentifier(), newValue );
+                        updatePrice( tempCPU.getIdentifier(), newValue.doubleValue() );
                     }
                 );
 
                 tempCPU.getPerformanceProperty().addListener(
                     ( o, oldValue, newValue ) ->
                     {
-                        System.out.println( "Performance oldv: " + oldValue + "newv: " + newValue );
- //TODO                 updatePerformance( tempCPU.getIdentifier(), newValue );
+                        //trying to catch the exception for the wrong data type input
+                        try
+                        {
+                            System.out.println("Got here 2");
+
+                            int iValue = newValue.intValue();
+                            System.out.println( "Performance oldv: " + oldValue + "newv: " + newValue );
+                            updatePerformance( tempCPU.getIdentifier(), iValue );
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println("Wrong input type");
+                        }
                     }
                 );
             }
